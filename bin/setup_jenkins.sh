@@ -33,6 +33,9 @@ oc new-build --strategy=pipeline --code=https://github.com/dvaseekara/advanced-o
 echo "oc start-build task-pipeline"
 oc start-build task-pipeline
 
+echo "oc get dc jenkins"
+oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
+
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
