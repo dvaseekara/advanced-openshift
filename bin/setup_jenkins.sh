@@ -34,7 +34,7 @@ echo "oc start-build task-pipeline"
 oc start-build task-pipeline
 
 echo "oc get dc jenkins"
-oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
+oc get dc task-pipeline -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
