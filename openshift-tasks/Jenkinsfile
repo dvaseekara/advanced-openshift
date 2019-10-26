@@ -17,7 +17,7 @@ def activeApp   = ""
 pipeline {
   agent {
     // Using the Jenkins Agent Pod that we defined earlier
-    label "jenkins-agent-appdev"
+    label "jenkins"
   }
   stages {
     // Checkout Source Code and calculate Version Numbers and Tags
