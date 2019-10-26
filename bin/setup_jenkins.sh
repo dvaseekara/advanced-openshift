@@ -48,7 +48,7 @@ items:
     source:
       type: "Git"
       git:
-        uri: "https://github.com/p-ebot/advdev-homework.git"
+        uri: "${REPO}"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
