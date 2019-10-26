@@ -11,7 +11,7 @@ fi
 GUID=$1
 USER=$2
 FROM_JENKINS=$3
-GPTE_JENKINS=system:serviceaccount:gpte-jenkins -n ${GUID}-jenkins
+GPTE_JENKINS=system:serviceaccount:gpte-jenkins 
 
 echo "Creating Homework Projects for GUID=${GUID} and USER=${USER}"
 oc new-project ${GUID}-jenkins    --display-name="${GUID} AdvDev Homework Jenkins"
