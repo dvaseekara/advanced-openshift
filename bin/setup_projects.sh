@@ -11,6 +11,7 @@ fi
 GUID=$1
 USER=$2
 FROM_JENKINS=$3
+GPTE_JENKINS=system:serviceaccount:gpte-jenkins -n ${GUID}-jenkins
 
 echo "Creating Homework Projects for GUID=${GUID} and USER=${USER}"
 oc new-project ${GUID}-jenkins    --display-name="${GUID} AdvDev Homework Jenkins"
@@ -23,9 +24,12 @@ if [ "$FROM_JENKINS" = "true" ]; then
   oc policy add-role-to-user admin ${USER} -n ${GUID}-tasks-prod
  
   echo "Add service account role"
-  oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins -n ${GUID}-jenkins
+  echo "FROM_JENKINS:  ${FROM_JENKINS}"
+  echo "GPTE_JENKINS:  ${GPTE_JENKINS}"
+  oc policy add-role-to-user admin ${GPTE_JENKINS} -n ${GUID}-jenkins
 
   oc annotate namespace ${GUID}-jenkins    openshift.io/requester=${USER} --overwrite
   oc annotate namespace ${GUID}-tasks-dev  openshift.io/requester=${USER} --overwrite
   oc annotate namespace ${GUID}-tasks-prod openshift.io/requester=${USER} --overwrite
+  oc annotate namespace ${GUID}-jenkins    openshift.io/requester=${GPTE_JENKINS} --overwrite
 fi
