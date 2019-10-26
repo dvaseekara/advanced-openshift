@@ -1,0 +1,10 @@
+#! /bin/bash
+
+spd-say "Sending it to Git mon"
+
+git add -A
+git commit -m "Auto commit"
+git push origin 
+
+
+
