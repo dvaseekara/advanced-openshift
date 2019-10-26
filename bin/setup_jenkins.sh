@@ -15,8 +15,8 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo https://github
 
 # Set up Jenkins with sufficient resources
 
-//echo "oc new-project"
-//oc new-project ${GUID}-jenkins --description "${GUID} Homework Grading Jenkins"
+#echo "oc new-project"
+#oc new-project ${GUID}-jenkins --description "${GUID} Homework Grading Jenkins"
 
 echo "oc new-app"
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=10Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --env JENKINS_JAVA_OVERRIDES="-Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=300" -n ${GUID}-jenkin
