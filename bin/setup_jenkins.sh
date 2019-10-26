@@ -20,6 +20,8 @@ oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi
 
 #echo "oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m"
 #oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
+echo "oc get dc"
+oc get dc
 
 # Create custom agent container image with skopeo
 echo "oc new-build jenkins agent from Docker"
@@ -33,8 +35,6 @@ oc new-build --strategy=pipeline --code=https://github.com/dvaseekara/advanced-o
 echo "oc start-build task-pipeline"
 oc start-build task-pipeline
 
-echo "oc get dc jenkins"
-oc get dc
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
