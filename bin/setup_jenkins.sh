@@ -31,7 +31,7 @@ echo "oc new-build jenkins agent from Docker"
 #oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev -n ${GUID}-jenkins
 oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins -n ${GUID}-jenkins
 
-
+oc start-build jenkins
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 #echo "oc new-build pipeline build from github jenkins file"
