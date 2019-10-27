@@ -237,15 +237,14 @@ podTemplate(
 		}
 	  }
 	}
+}
 
-
-	// Convenience Functions to read version from the pom.xml
-	// Do not change anything below this line.
-	// --------------------------------------------------------
-	def getVersionFromPom(pom) {
-	  def matcher = readFile(pom) =~ '<version>(.+)</version>'
-	  matcher ? matcher[0][1] : null
-	}
+// Convenience Functions to read version from the pom.xml
+// Do not change anything below this line.
+// --------------------------------------------------------
+def getVersionFromPom(pom) {
+  def matcher = readFile(pom) =~ '<version>(.+)</version>'
+  matcher ? matcher[0][1] : null
 }
 //   Build the source code, using the shared Nexus as a Maven proxy cache
 //   Execute the following tests in parallel and present the results in the build log:
