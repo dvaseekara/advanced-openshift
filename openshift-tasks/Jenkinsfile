@@ -19,17 +19,8 @@ pipeline {
       steps {
         echo "*******************************************************\n" +
              "*** Advanced OpenShift Development Homework Grading ***\n" +
-             "*** GUID:         ${GUID}\n" +
-             "*** USER:         ${USER}\n" +
-             "*** Student Repo: *********\n" +
-             "*** CLUSTER:      ${CLUSTER}\n" +
-             "*** SETUP:        ${SETUP}\n" +
-             "*** DELETE:       ${DELETE}\n" +
+             "***It Works!!!\n" +
              "*******************************************************"
-
-        echo "Cloning Student Project Repository"
-        git '${REPO}'
-        sh "chmod +x ./bin/*.sh"
       }
     }
   }
