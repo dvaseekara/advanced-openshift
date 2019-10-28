@@ -24,12 +24,15 @@ echo "oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1G
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
 echo "oc get dc"
-oc get dc
+oc get all
 
 # Create custom agent container image with skopeo
 echo "oc new-build jenkins agent from Docker"
 #oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev -n ${GUID}-jenkins
 oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev  -n ${GUID}-jenkins
+
+echo "Starting pod with jenkins-agent-appdev"
+oc start-build jenkins-agent-appdev -n ${GUID}-jenkins
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 #echo "oc new-build pipeline build from github jenkins file"
@@ -57,7 +60,7 @@ kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
 echo "Starting build"
-oc start-build tasks-pipeline -n {GUID}-jenkins
+oc start-build tasks-pipeline -n ${GUID}-jenkins
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
