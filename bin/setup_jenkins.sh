@@ -31,8 +31,6 @@ echo "oc new-build jenkins agent from Docker"
 #oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev -n ${GUID}-jenkins
 oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev  -n ${GUID}-jenkins
 
-oc start-build jenkins-agent-appdev 
-
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 #echo "oc new-build pipeline build from github jenkins file"
 #oc new-build --strategy=pipeline --code=https://github.com/dvaseekara/advanced-openshift.git --context-dir=openshift-tasks --env=GUID=28e7 --env=REPO=https://github.com/dvaseekara/advanced-openshift.git --env=CLUSTER=https://master.na311.openshift.opentlc.com --name=task-pipeline
@@ -58,10 +56,8 @@ items:
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
-
 echo "Starting build"
-oc start-build tasks-pipeline
-
+oc start-build tasks-pipeline -n {GUID}-jenkins
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
