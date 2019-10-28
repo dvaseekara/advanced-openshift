@@ -1,36 +1,36 @@
-#!groovy
-podTemplate(
-  label: "skopeo-pod",
-  cloud: "openshift",
-  inheritFrom: "maven",
-  containers: [
-    containerTemplate(
-      name: "jnlp",
-      image: "docker-registry.default.svc:5000/72a4-jenkins/jenkins-agent-appdev",
-      resourceRequestMemory: "1Gi",
-      resourceLimitMemory: "2Gi",
-      resourceRequestCpu: "1",
-      resourceLimitCpu: "2"
-    )
-  ]
-) {
- 
-  //def mvnCmd      = "mvn -s ../nexus_settings.xml"
-  //def version     = ""
-  //def devTag      = "0.0-0"
-  //def prodTag     = "0.0"
-  //def destApp     = "tasks-green"
-  //def activeApp   = ""
-	
-  node('skopeo-pod') {
-    // Define Maven Command to point to the correct
-    // settings for our Nexus installation
+pipeline {
+  agent {
+    kubernetes {
+      label "homework"
+      cloud "openshift"
+      inheritFrom "maven"
+      containerTemplate {
+        name "jnlp"
+        image "docker-registry.default.svc:5000/72a4-jenkins/jenkins-agent-appdev:latest"
+        resourceRequestMemory "1Gi"
+        resourceLimitMemory "2Gi"
+        resourceRequestCpu "1"
+        resourceLimitCpu "2"
+      }
+    }
+  }
+  stages {
+    stage('Testing pod') {
+      steps {
+        echo "*******************************************************\n" +
+             "*** Advanced OpenShift Development Homework Grading ***\n" +
+             "*** GUID:         ${GUID}\n" +
+             "*** USER:         ${USER}\n" +
+             "*** Student Repo: *********\n" +
+             "*** CLUSTER:      ${CLUSTER}\n" +
+             "*** SETUP:        ${SETUP}\n" +
+             "*** DELETE:       ${DELETE}\n" +
+             "*******************************************************"
 
-    // Checkout Source Code.
-    stage('Checkout Source') {
-      echo "Say some shiz"
+        echo "Cloning Student Project Repository"
+        git '${REPO}'
+        sh "chmod +x ./bin/*.sh"
+      }
     }
   }
 }
-
-  
