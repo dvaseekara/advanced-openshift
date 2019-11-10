@@ -15,30 +15,32 @@ podTemplate(
   ]
 ) {
  
-  //def mvnCmd      = "mvn -s ../nexus_settings.xml"
-  //def version     = ""
-  //def devTag      = "0.0-0"
-  //def prodTag     = "0.0"
-  //def destApp     = "tasks-green"
-  //def activeApp   = ""
+
+	// Set your project Prefix using your GUID
+	def prefix      = "28e7"
+
+	// Set variable globally to be available in all stages
+	// Set Maven command to always include Nexus Settings
+	def mvnCmd      = "mvn -f ./openshift-tasks/pom.xml -s ./nexus_settings.xml"
+	// Set Development and Production Project Names
+	def devProject  = "${prefix}-tasks-dev"
+	def prodProject = "${prefix}-tasks-prod"
+	// Set the tag for the development image: version + build number
+	def devTag      = "0.0-0"
+	// Set the tag for the production image: version
+	def prodTag     = "0.0"
+	def destApp     = "tasks-green"
+	def activeApp   = ""
 	
-  node('skopeo-pod') {
-    // Define Maven Command to point to the correct
-    // settings for our Nexus installation
+	node('skopeo-pod') {
+		// Define Maven Command to point to the correct
+		// settings for our Nexus installation
 
-    // Checkout Source Code.
-    stage('Checkout Source') {
-      echo "Say some shiz"
-    }
-  }
-}
-
-// Convenience Functions to read version from the pom.xml
-// Do not change anything below this line.
-// --------------------------------------------------------
-def getVersionFromPom(pom) {
-  def matcher = readFile(pom) =~ '<version>(.+)</version>'
-  matcher ? matcher[0][1] : null
+		// Checkout Source Code.
+		stage('Checkout Source') {
+			echo "Say some shiz"
+		}
+	}
 }
 
   
