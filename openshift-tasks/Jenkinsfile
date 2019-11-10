@@ -1,27 +1,45 @@
-pipeline {
-  agent {
-    kubernetes {
-      label "homework"
-      cloud "openshift"
-      inheritFrom "maven"
-      containerTemplate {
-        name "jnlp"
-        image "docker-registry.default.svc:5000/72a4-jenkins/jenkins-agent-appdev:latest"
-        resourceRequestMemory "1Gi"
-        resourceLimitMemory "2Gi"
-        resourceRequestCpu "1"
-        resourceLimitCpu "2"
-      }
-    }
-  }
-  stages {
-    stage('Testing pod') {
-      steps {
-        echo "*******************************************************\n" +
-             "*** Advanced OpenShift Development Homework Grading ***\n" +
-             "***It Works!!!\n" +
-             "*******************************************************"
-      }
-    }
-  }
+#!groovy
+podTemplate(
+  label: "skopeo-pod",
+  cloud: "openshift",
+  inheritFrom: "maven",
+  containers: [
+    containerTemplate(
+      name: "jnlp",
+      image: "docker-registry.default.svc:5000/${GUID}-jenkins/jenkins-agent-appdev",
+      resourceRequestMemory: "1Gi",
+      resourceLimitMemory: "2Gi",
+      resourceRequestCpu: "1",
+      resourceLimitCpu: "2"
+    )
+  ]
+) {
+
+
+        // Set your project Prefix using your GUID
+        def prefix      = "28e7"
+
+        // Set variable globally to be available in all stages
+        // Set Maven command to always include Nexus Settings
+        def mvnCmd      = "mvn -f ./openshift-tasks/pom.xml -s ./nexus_settings.xml"
+        // Set Development and Production Project Names
+        def devProject  = "${prefix}-tasks-dev"
+        def prodProject = "${prefix}-tasks-prod"
+        // Set the tag for the development image: version + build number
+        def devTag      = "0.0-0"
+        // Set the tag for the production image: version
+        def prodTag     = "0.0"
+        def destApp     = "tasks-green"
+        def activeApp   = ""
+
+        node('skopeo-pod') {
+                // Define Maven Command to point to the correct
+                // settings for our Nexus installation
+
+                // Checkout Source Code.
+                stage('Checkout Source') {
+                        echo "Say some shiz"
+                }
+        }
 }
+
