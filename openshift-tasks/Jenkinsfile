@@ -38,8 +38,53 @@ podTemplate(
 
 		// Checkout Source Code.
 		stage('Checkout Source') {
-			echo "Say some shiz"
+			steps {
+				echo "Checkout Source"
+				checkout([$class: 'GitSCM', 
+						  branches: [[name: '*/master']], 
+						  doGenerateSubmoduleConfigurations: false, 
+						  extensions: [], 
+						  submoduleCfg: [], 
+						  userRemoteConfigs: [[url: 'https://github.com/dvaseekara/advanced-openshift.git']]
+						 ])
+			}
 		}
+		
+		stage('Build War File'){
+			steps{
+				echo "Build War File"
+			}
+		}
+		
+		stage('Unit Tests'){
+		}
+		
+		stage('Code Analysis'){
+		}
+		
+		stage('Publish to Nexus'){
+		}
+		
+		stage('Build and Tag Openshift Image'){
+		}
+		
+		stage('Deploy to Dev'){
+		}
+		
+		stage('Integration Tests'){
+		}
+		
+		stage('Copy Image to Nexus Docker Registry'){
+		}
+		
+		stage('Blue/Green Production Deployment'){
+		}
+		
+		
+		
+		
+		
+		
 	}
 }
 
