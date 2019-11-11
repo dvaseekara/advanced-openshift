@@ -15,71 +15,34 @@ podTemplate(
   ]
 ) {
 
-	// Set your project Prefix using your GUID
-	def prefix      = "28e7"
 
-	// Set variable globally to be available in all stages
-	// Set Maven command to always include Nexus Settings
-	def mvnCmd      = "mvn -f ./openshift-tasks/pom.xml -s ./nexus_settings.xml"
-	// Set Development and Production Project Names
-	def devProject  = "${prefix}-tasks-dev"
-	def prodProject = "${prefix}-tasks-prod"
-	// Set the tag for the development image: version + build number
-	def devTag      = "0.0-0"
-	// Set the tag for the production image: version
-	def prodTag     = "0.0"
-	def destApp     = "tasks-green"
-	def activeApp   = ""
-	
-	node('skopeo-pod') {
-		// Define Maven Command to point to the correct
-		// settings for our Nexus installation
+        // Set your project Prefix using your GUID
+        def prefix      = "28e7"
 
-		// Checkout Source Code.
-		stage('Checkout Source') {
-			steps {
-				echo "Checkout Source"
-				checkout([$class: 'GitSCM', 
-						  branches: [[name: '*/master']], 
-						  doGenerateSubmoduleConfigurations: false, 
-						  extensions: [], 
-						  submoduleCfg: [], 
-						  userRemoteConfigs: [[url: 'https://github.com/dvaseekara/advanced-openshift.git']]
-						 ])
-			}
-		}
-		
-		stage('Build War File'){
-			steps{
-				echo "Build War File"
-			}
-		}
-		
-		stage('Unit Tests'){
-		}
-		
-		stage('Code Analysis'){
-		}
-		
-		stage('Publish to Nexus'){
-		}
-		
-		stage('Build and Tag Openshift Image'){
-		}
-		
-		stage('Deploy to Dev'){
-		}
-		
-		stage('Integration Tests'){
-		}
-		
-		stage('Copy Image to Nexus Docker Registry'){
-		}
-		
-		stage('Blue/Green Production Deployment'){
-		}
-		
-	}
+        // Set variable globally to be available in all stages
+        // Set Maven command to always include Nexus Settings
+        def mvnCmd      = "mvn -f ./openshift-tasks/pom.xml -s ./nexus_settings.xml"
+        // Set Development and Production Project Names
+        def devProject  = "${prefix}-tasks-dev"
+        def prodProject = "${prefix}-tasks-prod"
+        // Set the tag for the development image: version + build number
+        def devTag      = "0.0-0"
+        // Set the tag for the production image: version
+        def prodTag     = "0.0"
+        def destApp     = "tasks-green"
+        def activeApp   = ""
 
+        node('skopeo-pod') {
+                // Define Maven Command to point to the correct
+                // settings for our Nexus installation
+
+                // Checkout Source Code.
+                stage('Checkout Source') {
+                        echo "Say some shiz"
+                }
+        }
 }
+
+
+
 
