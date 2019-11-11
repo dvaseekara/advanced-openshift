@@ -31,6 +31,7 @@ echo "oc new-build jenkins agent from Docker"
 #oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev -n ${GUID}-jenkins
 oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n USER root\n RUN yum -y install skopeo && yum clean all\n USER 1001' --name=jenkins-agent-appdev  -n ${GUID}-jenkins
 
+
 echo "Starting pod with jenkins-agent-appdev"
 #oc start-build jenkins-agent-appdev -n ${GUID}-jenkins
 
